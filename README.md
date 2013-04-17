@@ -25,3 +25,12 @@ Following issues are covered:
 - Tracking dirty state.
 - Skin "extjs" and the native ExtJS windows for the editor inline popups.
 - Storing and restoring cursor position by inserting of a place holder over a popup window.
+
+Example:
+http://www.point-constructor.com/tinyta_demo/
+
+Download:
+http://www.point-constructor.com/en/tinyta/
+
+Reference:
+http://www.point-constructor.com/en/tinyta/instructions.pdf

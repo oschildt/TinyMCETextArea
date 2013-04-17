@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------
-  Ext.ux.form.TinyMCETextArea
+	Ext.ux.form.TinyMCETextArea
 	
   ExtJS form field - a text area with integrated TinyMCE WYSIWYG Editor
   

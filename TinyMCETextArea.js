@@ -6,8 +6,8 @@
 
  ExtJS form field - a text area with integrated TinyMCE WYSIWYG Editor
 
- Version: 2.5
- Release date: 29.03.2013
+ Version: 2.6
+ Release date: 22.05.2013
  ExtJS Version: 4.2.0
  TinyMCE Version: 3.5.8
  License: LGPL v2.1 or later, Sencha License
@@ -74,7 +74,7 @@ Ext.define('Ext.ux.form.TinyMCETextAreaWindowManager', {
         if (!w) {
             return;
         }
-
+        
         // TinyMCE window manager opens the windows in two steps
         //
         // 1. displaying and loading iframe
@@ -208,6 +208,8 @@ Ext.define('Ext.ux.form.TinyMCETextAreaWindowManager', {
                                 me.editor.selection.moveToBookmark(me.editor.windowManager.bookmark);
                             }
                             me.editor.focus();
+                            
+                            me.control.popupActive = false;
                         }
                     }, 300);
 
@@ -218,6 +220,8 @@ Ext.define('Ext.ux.form.TinyMCETextAreaWindowManager', {
 
         p.mce_window_id = win.getId();
 
+        me.control.popupActive = true;
+        
         win.show(null,
             function () {
                 // TinyMCE window manager opens the windows in two steps
@@ -240,7 +244,7 @@ Ext.define('Ext.ux.form.TinyMCETextAreaWindowManager', {
     close: function (win) {
 
         var me = this;
-
+        
         if (!win || !win.tinyMCEPopup || !win.tinyMCEPopup.id) { return; }
 
         var w = Ext.getCmp(win.tinyMCEPopup.id);
@@ -264,6 +268,7 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
      */
     wysiwygIntialized: false,
     intializationInProgress: false,
+    popupActive: false,
     lastWidth: 0,
     lastHeight: 0,
     positionBeforeBlur: null,
@@ -512,8 +517,21 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
 
                 tinymce.dom.Event.add(ed.getWin(), 'focus', function (e) {
                     var w = me.findParentByType('window');
-                    if (w) {
-                        w.toFront(true);
+                    if (w && !me.popupActive) {
+                      // we use toFront to bring the parent window
+                      // to the front when the editor gets focus.
+                      // Under IE10, the editor gets focus, even if
+                      // a popup like image insert is opened. This is 
+                      // bad, because the popup goes into the back, and 
+                      // the editor to the front.
+                      //
+                      // We have introduced the flag 'popupActive',
+                      // which is set when the popup is opened and unset 
+                      // when the popup is closed.
+                      //
+                      // We do not do toFront id the popup is active.
+                      
+                      w.toFront(true);
                     }
                 });
             });

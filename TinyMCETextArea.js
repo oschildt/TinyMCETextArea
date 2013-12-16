@@ -6,10 +6,10 @@
 
  ExtJS form field - a text area with integrated TinyMCE WYSIWYG Editor
 
- Version: 2.6
- Release date: 22.05.2013
- ExtJS Version: 4.2.0
- TinyMCE Version: 3.5.8
+ Version: 2.8
+ Release date: 17.12.2013
+ ExtJS Version: 4.2.1
+ TinyMCE Version: 3.5.10
  License: LGPL v2.1 or later, Sencha License
 
  Author: Oleg Schildt
@@ -513,6 +513,14 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
                 me.wysiwygIntialized = true;
                 me.intializationInProgress = false;
 
+                // This piece of code solves the problem of change propagation so that
+                // there is no need to call triggerSave
+                var setContent = ed.setContent;
+                ed.setContent = function () {
+                    setContent.apply(ed, arguments);
+                    me.tinyMCEConfig.onchange_callback(ed);
+                };
+                
                 if (me.isDisabled()) { me.disableEditor(); }
 
                 tinymce.dom.Event.add(ed.getWin(), 'focus', function (e) {

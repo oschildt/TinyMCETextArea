@@ -2,8 +2,8 @@ Ext.ux.form.TinyMCETextArea
 
 ExtJS form field - a text area with integrated TinyMCE WYSIWYG Editor.
 
-Version: 2.8
-Release date: 17.12.2013
+Version: 2.8Release date: 17.12.2013
+
 ExtJS Version: 4.2.1
 TinyMCE Version: 3.5.10
 License: LGPL v2.1 or later, Sencha License

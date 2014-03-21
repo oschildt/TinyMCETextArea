@@ -480,7 +480,8 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
 
             ed.save();
 
-            me.fireEvent('dirtychange', me, newval, oldval, {});
+            me.fireEvent('change', me, newval, oldval, {});
+            me.checkDirty();
 
             if (me.validateOnChange) {
                 me.validate();
